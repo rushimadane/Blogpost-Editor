@@ -8,7 +8,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/posts")
-@CrossOrigin(origins = "http://localhost:4200")
+
 public class BlogPostController {
 
     private final BlogPostRepository blogPostRepository;
