@@ -1,16 +1,27 @@
-<h2>{{ editingPostId ? 'Edit Blog Post' : 'Create Blog Post' }}</h2>
+<div class="max-w-3xl mx-auto py-12 px-4">
+  <header class="mb-10">
+    <h1 class="text-3xl font-extrabold tracking-tight text-slate-900">Blog Studio</h1>
+    <p class="text-slate-500 mt-2">Create and manage your stories with ease.</p>
+  </header>
 
-<app-blog-form
-  [newPost]="newPost"
-  [editingPostId]="editingPostId"
-  (add)="addPost()"
-  (update)="updatePost()">
-</app-blog-form>
+  <section class="mb-12">
+    <h2 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-4">
+      {{ editingPostId ? 'Editing Post' : 'New Post' }}
+    </h2>
+    <app-blog-form
+      [newPost]="newPost"
+      [editingPostId]="editingPostId"
+      (add)="addPost()"
+      (update)="updatePost()">
+    </app-blog-form>
+  </section>
 
-<hr />
-
-<app-blog-list
-  [posts]="posts"
-  (edit)="editPost($event)"
-  (delete)="deletePost($event)">
-</app-blog-list>
+  <section>
+    <h2 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-4">Recent Stories</h2>
+    <app-blog-list
+      [posts]="posts"
+      (edit)="editPost($event)"
+      (delete)="deletePost($event)">
+    </app-blog-list>
+  </section>
+</div>
