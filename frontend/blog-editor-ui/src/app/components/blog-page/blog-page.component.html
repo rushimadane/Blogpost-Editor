@@ -1,0 +1,16 @@
+<h2>{{ editingPostId ? 'Edit Blog Post' : 'Create Blog Post' }}</h2>
+
+<app-blog-form
+  [newPost]="newPost"
+  [editingPostId]="editingPostId"
+  (add)="addPost()"
+  (update)="updatePost()">
+</app-blog-form>
+
+<hr />
+
+<app-blog-list
+  [posts]="posts"
+  (edit)="editPost($event)"
+  (delete)="deletePost($event)">
+</app-blog-list>

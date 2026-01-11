@@ -1,51 +1,14 @@
-<h2>{{ editingPostId ? 'Edit Blog Post' : 'Create Blog Post' }}</h2>
-
-<form (ngSubmit)="editingPostId ? updatePost() : addPost()">
-  <input
-    type="text"
-    placeholder="Title"
-    [(ngModel)]="newPost.title"
-    name="title"
-    required
-  />
-
-  <br /><br />
-
-  <textarea
-    placeholder="Content"
-    [(ngModel)]="newPost.content"
-    name="content"
-    required
-  ></textarea>
-
-  <br /><br />
-
-  <input
-    type="text"
-    placeholder="Author"
-    [(ngModel)]="newPost.author"
-    name="author"
-    required
-  />
-
-  <br /><br />
-
-  <button type="submit">
-    {{ editingPostId ? 'Update Post' : 'Add Post' }}
-  </button>
-</form>
-
-<hr />
-
 <h2>Blog Posts</h2>
 
-<div *ngFor="let post of posts" class="post">
+<div *ngFor="let post of posts">
   <h3>{{ post.title }}</h3>
   <p>{{ post.content }}</p>
   <small>Author: {{ post.author }}</small><br />
 
-  <button (click)="editPost(post)">Edit</button>
-  <button (click)="deletePost(post.id!)">Delete</button>
+  <button (click)="edit.emit(post)">Edit</button>
+  <button (click)="delete.emit(post.id)">Delete</button>
+
+
 
   <hr />
 </div>

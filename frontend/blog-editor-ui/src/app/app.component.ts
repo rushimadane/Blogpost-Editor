@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { BlogListComponent } from './components/blog-list/blog-list.component';
+import { BlogPageComponent } from './components/blog-page/blog-page.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [BlogListComponent],
-  template: `<app-blog-list></app-blog-list>`
+  imports: [BlogPageComponent],
+  templateUrl: './app.component.html'
 })
 export class AppComponent {}
-
