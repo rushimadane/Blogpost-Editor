@@ -7,6 +7,8 @@ export interface BlogPost {
   title: string;
   content: string;
   author: string;
+  publishDate?: string;
+  status?: string;
 }
 
 @Injectable({
@@ -18,8 +20,15 @@ export class BlogPostService {
 
   constructor(private http: HttpClient) {}
 
-  getAllPosts(): Observable<BlogPost[]> {
-    return this.http.get<BlogPost[]>(this.apiUrl);
+  // --- Updated getAllPosts to accept optional filter/sort params ---
+  getAllPosts(sortBy?: string, sortDir?: string, filterType?: string, filterValue?: string): Observable<BlogPost[]> {
+    let params: any = {};
+    if (sortBy) params.sortBy = sortBy;
+    if (sortDir) params.sortDir = sortDir;
+    if (filterType) params.filterType = filterType;
+    if (filterValue) params.filterValue = filterValue;
+
+    return this.http.get<BlogPost[]>(this.apiUrl, { params });
   }
 
   createPost(post: BlogPost): Observable<BlogPost> {
@@ -27,11 +36,10 @@ export class BlogPostService {
   }
 
   updatePost(id: number, post: BlogPost): Observable<BlogPost> {
-  return this.http.put<BlogPost>(`${this.apiUrl}/${id}`, post);
-}
+    return this.http.put<BlogPost>(`${this.apiUrl}/${id}`, post);
+  }
 
-deletePost(id: number): Observable<void> {
-  return this.http.delete<void>(`${this.apiUrl}/${id}`);
-}
-
+  deletePost(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
 }

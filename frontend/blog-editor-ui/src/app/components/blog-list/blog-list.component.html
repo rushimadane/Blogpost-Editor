@@ -1,17 +1,37 @@
 <div class="space-y-6">
   <div *ngFor="let post of posts" class="group bg-white p-6 rounded-xl border border-slate-100 hover:border-indigo-200 transition-colors">
     <div class="flex justify-between items-start">
-      <div>
-        <h3 class="text-xl font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">{{ post.title }}</h3>
-        <p class="mt-2 text-slate-600 leading-relaxed">{{ post.content }}</p>
+      <div class="w-full">
+        <div class="flex justify-between items-center mb-2">
+           <h3 class="text-xl font-bold text-slate-900 group-hover:text-indigo-600 transition-colors">{{ post.title }}</h3>
+           
+           <span [ngClass]="{
+             'bg-yellow-100 text-yellow-800': post.status === 'DRAFT',
+             'bg-blue-100 text-blue-800': post.status === 'SCHEDULED',
+             'bg-green-100 text-green-800': post.status === 'PUBLISHED'
+           }" class="text-xs font-semibold px-2.5 py-0.5 rounded-full border border-opacity-20 uppercase tracking-wide">
+             {{ post.status || 'DRAFT' }}
+           </span>
+        </div>
+
+        <div class="mt-2 text-slate-600 leading-relaxed" [innerHTML]="post.content"></div>
+
       </div>
     </div>
     
     <div class="mt-4 flex items-center justify-between border-t border-slate-50 pt-4">
-      <span class="text-sm font-medium text-slate-500">By {{ post.author }}</span>
+      <div class="text-sm text-slate-500 flex items-center">
+        <span class="font-medium text-slate-700">By {{ post.author }}</span>
+        
+        <span *ngIf="post.publishDate" class="ml-3 border-l pl-3 border-slate-300">
+          <span class="hidden sm:inline">Target Date: </span>
+          {{ post.publishDate | date:'medium' }}
+        </span>
+      </div>
+
       <div class="flex gap-2">
-        <button (click)="edit.emit(post)" class="text-indigo-600 hover:bg-indigo-50 text-sm">Edit</button>
-        <button (click)="delete.emit(post.id)" class="text-rose-600 hover:bg-rose-50 text-sm">Delete</button>
+        <button (click)="edit.emit(post)" class="text-indigo-600 hover:bg-indigo-50 text-sm font-medium px-3 py-1 rounded transition-colors">Edit</button>
+        <button (click)="delete.emit(post.id)" class="text-rose-600 hover:bg-rose-50 text-sm font-medium px-3 py-1 rounded transition-colors">Delete</button>
       </div>
     </div>
   </div>

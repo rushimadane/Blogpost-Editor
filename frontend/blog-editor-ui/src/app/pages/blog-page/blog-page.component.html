@@ -1,1 +1,68 @@
-<p>blog-page works!</p>
+<div class="max-w-4xl mx-auto py-12 px-4">
+  <header class="mb-10 text-center">
+    <h1 class="text-4xl font-extrabold tracking-tight text-slate-900">Blog Studio</h1>
+    <p class="text-slate-500 mt-2 text-lg">Create, schedule, and manage your stories.</p>
+  </header>
+
+  <section class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 mb-8">
+    <div class="flex flex-col md:flex-row gap-4 items-end">
+      
+      <div class="flex-1">
+        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Sort By</label>
+        <select [(ngModel)]="sortBy" (change)="loadPosts()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-md text-sm">
+          <option value="publishDate">Date</option>
+          <option value="title">Title</option>
+          <option value="author">Author</option>
+        </select>
+      </div>
+
+      <div class="w-32">
+        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Order</label>
+        <select [(ngModel)]="sortDir" (change)="loadPosts()" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-md text-sm">
+          <option value="desc">Newest First</option>
+          <option value="asc">Oldest First</option>
+        </select>
+      </div>
+
+      <div class="w-40">
+        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Filter By</label>
+        <select [(ngModel)]="filterType" class="w-full p-2 bg-slate-50 border border-slate-200 rounded-md text-sm">
+          <option value="">None</option>
+          <option value="author">Author</option>
+          <option value="status">Status</option>
+        </select>
+      </div>
+
+      <div class="flex-1">
+        <label class="block text-xs font-bold text-slate-500 uppercase mb-1">Search Term</label>
+        <input type="text" [(ngModel)]="filterValue" placeholder="Type to search..." 
+               class="w-full p-2 bg-slate-50 border border-slate-200 rounded-md text-sm" />
+      </div>
+
+      <button (click)="loadPosts()" class="bg-indigo-600 text-white px-5 py-2 rounded-md text-sm font-medium hover:bg-indigo-700 transition-colors">
+        Apply
+      </button>
+    </div>
+  </section>
+
+  <section class="mb-12">
+    <h2 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-4">
+      {{ editingPostId ? 'Editing Post' : 'New Post' }}
+    </h2>
+    <app-blog-form
+      [newPost]="newPost"
+      [editingPostId]="editingPostId"
+      (add)="addPost()"
+      (update)="updatePost()">
+    </app-blog-form>
+  </section>
+
+  <section>
+    <h2 class="text-sm font-bold uppercase tracking-wider text-slate-400 mb-4">All Stories</h2>
+    <app-blog-list
+      [posts]="posts"
+      (edit)="editPost($event)"
+      (delete)="deletePost($event)">
+    </app-blog-list>
+  </section>
+</div>
