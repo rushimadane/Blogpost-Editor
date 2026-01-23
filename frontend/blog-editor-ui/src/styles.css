@@ -1,21 +1,50 @@
-/* Import Tailwind if using it, or add these base styles */
-@import "tailwindcss";
+/* 1. Import Tailwind CSS Directives */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@import '@angular/material/prebuilt-themes/indigo-pink.css';
-body {
-  background-color: #f8fafc; /* Slate 50 */
-  color: #1e293b; /* Slate 800 */
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+/* 2. Global Resets */
+html, body {
+  height: 100%;
   margin: 0;
-  padding: 0;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: #f8fafc; /* slate-50 */
 }
 
-input, textarea {
-  @apply w-full px-4 py-2 border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent outline-none transition-all;
+/* 3. Custom Scrollbar (Optional) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
 }
 
-button {
-  @apply px-4 py-2 rounded-lg font-medium transition-all active:scale-95;
+/* 4. Custom Snack Bar / Toast Styles 
+   These match the panelClass used in BlogPageComponent */
+
+/* Success Toast - Green Theme */
+.toast-success {
+  --mdc-snackbar-container-color: #10b981 !important; /* emerald-500 */
+  --mdc-snackbar-supporting-text-color: #ffffff !important;
+  --mat-snack-bar-button-color: #ffffff !important;
 }
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Error Toast - Red Theme */
+.toast-error {
+  --mdc-snackbar-container-color: #ef4444 !important; /* red-500 */
+  --mdc-snackbar-supporting-text-color: #ffffff !important;
+  --mat-snack-bar-button-color: #ffffff !important;
+}
+
+/* Common Toast Text Styles */
+.mat-mdc-snack-bar-label {
+  font-weight: 500;
+  font-size: 0.95rem;
+}
