@@ -6,12 +6,21 @@
 
   <div *ngIf="!loading && post" class="max-w-4xl mx-auto">
     
-    <a routerLink="/blogs" class="inline-flex items-center text-slate-500 hover:text-indigo-600 transition-colors mb-8 cursor-pointer group font-medium">
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-      </svg>
-      Back to Library
-    </a>
+    <div class="flex justify-between items-center mb-8">
+      <a routerLink="/blogs" class="inline-flex items-center text-slate-500 hover:text-indigo-600 transition-colors cursor-pointer group font-medium">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+        Back to Library
+      </a>
+
+      <a [routerLink]="['/edit', post.id]" class="inline-flex items-center px-4 py-2 bg-white border border-slate-200 rounded-lg text-slate-600 hover:text-indigo-600 hover:border-indigo-200 hover:bg-indigo-50 transition-all font-medium text-sm shadow-sm cursor-pointer">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+        </svg>
+        Edit Story
+      </a>
+    </div>
 
     <article class="bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden border border-white/40">
       
@@ -48,7 +57,7 @@
       </div>
 
       <div class="p-8 sm:p-14 bg-white/60">
-        <div class="prose prose-lg prose-indigo max-w-none text-slate-600 leading-relaxed">
+        <div class="prose prose-lg prose-indigo max-w-none text-slate-600 leading-relaxed whitespace-pre-wrap">
           {{ post.content }}
         </div>
       </div>

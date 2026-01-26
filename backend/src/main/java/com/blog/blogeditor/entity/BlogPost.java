@@ -1,7 +1,7 @@
 package com.blog.blogeditor.entity;
 
 import jakarta.persistence.*;
-import java.time.LocalDate; // Changed from LocalDateTime
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "blog_posts")
@@ -20,12 +20,12 @@ public class BlogPost {
     @Column(nullable = false)
     private String author;
 
-    // --- Changed to LocalDate to match Frontend Input ---
+    // --- New Fields for Scheduling ---
     @Column(name = "publish_date")
-    private LocalDate publishDate;
+    private LocalDateTime publishDate;
 
     @Column(nullable = false)
-    private String status = "DRAFT"; 
+    private String status = "DRAFT"; // Values: DRAFT, PUBLISHED, SCHEDULED
 
     // Constructors
     public BlogPost() {
@@ -70,11 +70,11 @@ public class BlogPost {
         this.author = author;
     }
 
-    public LocalDate getPublishDate() {
+    public LocalDateTime getPublishDate() {
         return publishDate;
     }
 
-    public void setPublishDate(LocalDate publishDate) {
+    public void setPublishDate(LocalDateTime publishDate) {
         this.publishDate = publishDate;
     }
 

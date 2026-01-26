@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { BlogPostService, BlogPost } from '../../services/blog-post.service';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
@@ -11,24 +11,54 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
   imports: [CommonModule, FormsModule, RouterLink, MatSnackBarModule],
   templateUrl: './create-blog.component.html'
 })
-export class CreateBlogComponent {
+export class CreateBlogComponent implements OnInit {
   
-  // Model for the new post
   post: BlogPost = {
     title: '',
     content: '',
     author: '',
     status: 'DRAFT',
-    publishDate: new Date().toISOString().split('T')[0] // Default to today
+    publishDate: new Date().toISOString().split('T')[0]
   };
 
   isSubmitting = false;
+  isEditMode = false;
+  postId?: number;
 
   constructor(
     private blogService: BlogPostService,
     private router: Router,
+    private route: ActivatedRoute,
     private snackBar: MatSnackBar
   ) {}
+
+  ngOnInit(): void {
+    // Check if we are in "Edit Mode"
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.isEditMode = true;
+      this.postId = +id;
+      this.loadPost(this.postId);
+    }
+  }
+
+  loadPost(id: number): void {
+    this.blogService.getPostById(id).subscribe({
+      next: (data) => {
+        this.post = data;
+        // Ensure date format is compatible with input[type="date"] (yyyy-MM-dd)
+        if (this.post.publishDate && Array.isArray(this.post.publishDate)) {
+           // Handle Java LocalDate array [yyyy, MM, dd] if necessary
+           const d = this.post.publishDate as any;
+           this.post.publishDate = `${d[0]}-${String(d[1]).padStart(2, '0')}-${String(d[2]).padStart(2, '0')}`;
+        }
+      },
+      error: () => {
+        this.showToast('Failed to load story', 'error');
+        this.router.navigate(['/blogs']);
+      }
+    });
+  }
 
   onSubmit(status: 'DRAFT' | 'PUBLISHED'): void {
     if (!this.post.title || !this.post.content || !this.post.author) {
@@ -38,16 +68,14 @@ export class CreateBlogComponent {
 
     this.isSubmitting = true;
     this.post.status = status;
-    
-    // Ensure date is set
-    if (!this.post.publishDate) {
-      this.post.publishDate = new Date().toISOString().split('T')[0];
-    }
 
-    this.blogService.createPost(this.post).subscribe({
+    const request = this.isEditMode && this.postId
+      ? this.blogService.updatePost(this.postId, this.post)
+      : this.blogService.createPost(this.post);
+
+    request.subscribe({
       next: () => {
-        this.showToast(status === 'PUBLISHED' ? 'Story published!' : 'Draft saved');
-        // Redirect to the library after a short delay
+        this.showToast(this.isEditMode ? 'Story updated!' : (status === 'PUBLISHED' ? 'Story published!' : 'Draft saved'));
         setTimeout(() => this.router.navigate(['/blogs']), 1000);
       },
       error: () => {
