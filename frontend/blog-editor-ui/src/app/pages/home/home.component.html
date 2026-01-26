@@ -1,39 +1,60 @@
-<div class="min-h-screen bg-slate-50 flex flex-col justify-center items-center text-center px-4">
-  <div class="max-w-3xl space-y-8">
-    <div class="space-y-4">
-      <h1 class="text-5xl font-extrabold tracking-tight text-slate-900 sm:text-6xl">
-        Welcome to <span class="text-indigo-600">Blog Studio</span>
-      </h1>
-      <p class="text-lg text-slate-600 max-w-2xl mx-auto">
-        The professional platform to create, edit, and manage your stories with ease.
-        Experience a streamlined workflow designed for modern writers.
-      </p>
-    </div>
+<div class="relative min-h-screen bg-slate-900 overflow-hidden flex flex-col justify-center">
+  
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full z-0 pointer-events-none">
+    <div class="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-purple-600/30 rounded-full blur-[100px] animate-pulse"></div>
+    <div class="absolute bottom-1/4 right-1/4 w-[600px] h-[600px] bg-indigo-600/20 rounded-full blur-[120px]"></div>
+  </div>
 
-    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+  <div class="relative z-10 max-w-5xl mx-auto px-6 text-center">
+    
+    <span class="inline-block py-1 px-3 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-sm font-bold tracking-widest uppercase mb-6 animate-fade-in">
+      The Future of Storytelling
+    </span>
+
+    <h1 class="text-6xl md:text-8xl font-black text-white tracking-tighter leading-tight mb-8 drop-shadow-2xl">
+      Craft Your <br>
+      <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400">Masterpiece.</span>
+    </h1>
+
+    <p class="text-xl text-slate-400 max-w-2xl mx-auto mb-12 leading-relaxed">
+      A distraction-free environment designed for modern creators. 
+      Share your ideas with the world using our powerful, minimalist editor.
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-5 justify-center items-center">
+      
+      <a routerLink="/create" 
+         class="group relative inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 bg-indigo-600 rounded-full hover:bg-indigo-700 hover:shadow-lg hover:shadow-indigo-500/50 hover:-translate-y-1">
+        <span>Start Writing</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+        </svg>
+      </a>
+
       <a routerLink="/blogs" 
-         class="inline-flex items-center justify-center px-8 py-3 text-base font-medium text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-200 cursor-pointer">
-        Manage Blogs
-      </a>
-      <a href="#" onclick="return false;"
-         class="inline-flex items-center justify-center px-8 py-3 text-base font-medium text-slate-700 bg-white border border-slate-200 rounded-lg hover:bg-slate-50 transition-colors cursor-default">
-        Documentation
+         class="inline-flex items-center justify-center px-8 py-4 text-lg font-bold text-white transition-all duration-200 bg-white/5 border border-white/10 rounded-full hover:bg-white/10 backdrop-blur-sm">
+        View Library
       </a>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12 text-left">
-      <div class="p-6 bg-white rounded-xl shadow-sm border border-slate-100">
-        <h3 class="font-bold text-slate-900 text-lg mb-2">Create</h3>
-        <p class="text-slate-500 text-sm">Draft new stories instantly with our intuitive editor interface.</p>
+    <div class="mt-20 pt-10 border-t border-white/5 grid grid-cols-2 md:grid-cols-4 gap-8 opacity-60">
+      <div>
+        <p class="text-3xl font-bold text-white">100%</p>
+        <p class="text-xs uppercase tracking-wider text-slate-400 mt-1">Focus</p>
       </div>
-      <div class="p-6 bg-white rounded-xl shadow-sm border border-slate-100">
-        <h3 class="font-bold text-slate-900 text-lg mb-2">Manage</h3>
-        <p class="text-slate-500 text-sm">Filter, sort, and organize your content library efficiently.</p>
+      <div>
+        <p class="text-3xl font-bold text-white">Zero</p>
+        <p class="text-xs uppercase tracking-wider text-slate-400 mt-1">Distractions</p>
       </div>
-      <div class="p-6 bg-white rounded-xl shadow-sm border border-slate-100">
-        <h3 class="font-bold text-slate-900 text-lg mb-2">Publish</h3>
-        <p class="text-slate-500 text-sm">Schedule your posts and share your thoughts with the world.</p>
+      <div>
+        <p class="text-3xl font-bold text-white">Secure</p>
+        <p class="text-xs uppercase tracking-wider text-slate-400 mt-1">Cloud Storage</p>
+      </div>
+      <div>
+        <p class="text-3xl font-bold text-white">Free</p>
+        <p class="text-xs uppercase tracking-wider text-slate-400 mt-1">Forever</p>
       </div>
     </div>
+
   </div>
 </div>

@@ -1,17 +1,50 @@
-/* 1. Import Tailwind CSS Directives */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* 1. Tailwind v4 Import (Replaces @tailwind directives) */
+@import "tailwindcss";
 
-/* 2. Global Resets */
+/* 2. Import Font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* 3. Global Configuration */
+@theme {
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+}
+
+/* 4. Global Resets */
 html, body {
   height: 100%;
   margin: 0;
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-sans);
   background-color: #f8fafc; /* slate-50 */
 }
 
-/* 3. Custom Scrollbar (Optional) */
+/* 5. Custom Animations (Moved here for reliability) */
+@layer utilities {
+  .animate-fade-in {
+    animation: fadeIn 1s ease-out forwards;
+  }
+  
+  .animate-fade-in-up {
+    animation: fadeInUp 0.8s ease-out forwards;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes fadeInUp {
+    from { 
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to { 
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+/* 6. Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -26,24 +59,19 @@ html, body {
   background: #94a3b8;
 }
 
-/* 4. Custom Snack Bar / Toast Styles 
-   These match the panelClass used in BlogPageComponent */
-
-/* Success Toast - Green Theme */
+/* 7. SnackBar / Toast Styles */
 .toast-success {
-  --mdc-snackbar-container-color: #10b981 !important; /* emerald-500 */
+  --mdc-snackbar-container-color: #10b981 !important;
   --mdc-snackbar-supporting-text-color: #ffffff !important;
   --mat-snack-bar-button-color: #ffffff !important;
 }
 
-/* Error Toast - Red Theme */
 .toast-error {
-  --mdc-snackbar-container-color: #ef4444 !important; /* red-500 */
+  --mdc-snackbar-container-color: #ef4444 !important;
   --mdc-snackbar-supporting-text-color: #ffffff !important;
   --mat-snack-bar-button-color: #ffffff !important;
 }
 
-/* Common Toast Text Styles */
 .mat-mdc-snack-bar-label {
   font-weight: 500;
   font-size: 0.95rem;

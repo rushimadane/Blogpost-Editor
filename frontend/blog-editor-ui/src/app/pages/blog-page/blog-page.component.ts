@@ -1,11 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
+import { RouterLink } from '@angular/router';
 import { BlogPostService, BlogPost } from '../../services/blog-post.service';
-import { BlogFormComponent } from '../../components/blog-form/blog-form.component';
-import { BlogListComponent } from '../../components/blog-list/blog-list.component';
-
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
@@ -14,30 +11,19 @@ import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
   imports: [
     CommonModule,
     FormsModule,
-    BlogFormComponent,
-    BlogListComponent,
+    RouterLink,
     MatSnackBarModule
   ],
   templateUrl: './blog-page.component.html'
 })
 export class BlogPageComponent implements OnInit {
-
   posts: BlogPost[] = [];
-  editingPostId: number | null = null;
-
+  
   // Sorting & filtering state
   sortBy: string = 'publishDate';
   sortDir: string = 'desc';
   filterType: string = '';
   filterValue: string = '';
-
-  newPost: BlogPost = {
-    title: '',
-    content: '',
-    author: '',
-    status: 'DRAFT',
-    publishDate: ''
-  };
 
   constructor(
     private blogService: BlogPostService,
@@ -59,58 +45,21 @@ export class BlogPageComponent implements OnInit {
       });
   }
 
-  addPost(): void {
-    this.blogService.createPost(this.newPost).subscribe({
-      next: () => {
-        this.showToast('Post created successfully');
-        this.resetForm();
-        this.loadPosts();
-      },
-      error: () => this.showToast('Failed to create post', 'error')
-    });
-  }
-
-  updatePost(): void {
-    if (!this.editingPostId) return;
-
-    this.blogService.updatePost(this.editingPostId, this.newPost)
-      .subscribe({
+  deletePost(id: number, event: Event): void {
+    // Prevent the card click event (which opens the blog) from firing
+    event.stopPropagation();
+    
+    if(confirm('Are you sure you want to delete this story? This cannot be undone.')) {
+      this.blogService.deletePost(id).subscribe({
         next: () => {
-          this.showToast('Post updated successfully');
-          this.resetForm();
+          this.showToast('Post deleted successfully');
           this.loadPosts();
         },
-        error: () => this.showToast('Failed to update post', 'error')
+        error: () => this.showToast('Failed to delete post', 'error')
       });
+    }
   }
 
-  deletePost(id: number): void {
-    this.blogService.deletePost(id).subscribe({
-      next: () => {
-        this.showToast('Post deleted successfully');
-        this.loadPosts();
-      },
-      error: () => this.showToast('Failed to delete post', 'error')
-    });
-  }
-
-  editPost(post: BlogPost): void {
-    this.editingPostId = post.id!;
-    this.newPost = { ...post };
-  }
-
-  resetForm(): void {
-    this.editingPostId = null;
-    this.newPost = {
-      title: '',
-      content: '',
-      author: '',
-      status: 'DRAFT',
-      publishDate: ''
-    };
-  }
-
-  // 🔔 Central toast helper
   private showToast(message: string, type: 'success' | 'error' = 'success'): void {
     this.snackBar.open(message, 'Close', {
       duration: 3000,

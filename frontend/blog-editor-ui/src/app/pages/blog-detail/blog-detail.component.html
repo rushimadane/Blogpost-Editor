@@ -1,0 +1,67 @@
+<div class="min-h-screen bg-gradient-to-br from-slate-50 to-indigo-50 py-12 px-4 sm:px-6 lg:px-8">
+  
+  <div *ngIf="loading" class="flex justify-center items-center h-64">
+    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600"></div>
+  </div>
+
+  <div *ngIf="!loading && post" class="max-w-4xl mx-auto">
+    
+    <a routerLink="/blogs" class="inline-flex items-center text-slate-500 hover:text-indigo-600 transition-colors mb-8 cursor-pointer group font-medium">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      Back to Library
+    </a>
+
+    <article class="bg-white/80 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden border border-white/40">
+      
+      <div class="relative bg-indigo-600 p-8 sm:p-14 overflow-hidden">
+        <div class="absolute top-0 right-0 -mr-20 -mt-20 w-64 h-64 rounded-full bg-white/10 blur-3xl"></div>
+        <div class="absolute bottom-0 left-0 -ml-20 -mb-20 w-64 h-64 rounded-full bg-purple-500/20 blur-3xl"></div>
+        
+        <div class="absolute inset-0 bg-gradient-to-br from-indigo-600 to-violet-700 opacity-95"></div>
+        
+        <div class="relative z-10">
+          <div class="flex items-center gap-3 mb-6">
+            <span class="px-3 py-1 rounded-full text-xs font-bold tracking-wide uppercase bg-white/20 text-white backdrop-blur-sm border border-white/10">
+              {{ post.status }}
+            </span>
+            <span class="text-indigo-100 text-sm font-medium tracking-wide">
+              {{ post.publishDate | date:'mediumDate' }}
+            </span>
+          </div>
+          
+          <h1 class="text-4xl sm:text-6xl font-extrabold text-white tracking-tight leading-tight mb-8 drop-shadow-sm">
+            {{ post.title }}
+          </h1>
+
+          <div class="flex items-center">
+            <div class="h-12 w-12 rounded-full bg-gradient-to-tr from-orange-400 to-pink-500 flex items-center justify-center text-white font-bold text-xl shadow-lg ring-4 ring-white/20">
+              {{ post.author.charAt(0) | uppercase }}
+            </div>
+            <div class="ml-4">
+              <p class="text-white font-bold text-lg">{{ post.author }}</p>
+              <p class="text-indigo-200 text-xs uppercase tracking-wider font-semibold">Content Creator</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="p-8 sm:p-14 bg-white/60">
+        <div class="prose prose-lg prose-indigo max-w-none text-slate-600 leading-relaxed">
+          {{ post.content }}
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <div *ngIf="!loading && !post" class="text-center py-20">
+    <div class="bg-white p-8 rounded-2xl shadow-xl inline-block">
+      <h2 class="text-2xl font-bold text-slate-800">Post not found</h2>
+      <p class="text-slate-500 mt-2">The story you are looking for doesn't exist.</p>
+      <a routerLink="/blogs" class="mt-6 inline-block bg-indigo-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-indigo-700 transition-colors">
+        Return Home
+      </a>
+    </div>
+  </div>
+</div>

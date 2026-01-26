@@ -17,7 +17,7 @@ public class BlogPostController {
         this.blogPostRepository = blogPostRepository;
     }
 
-    // --- Updated Get Method with Sorting & Filtering ---
+    // 1. Get All Posts (With Sorting & Filtering)
     @GetMapping
     public List<BlogPost> getAllPosts(
             @RequestParam(required = false, defaultValue = "publishDate") String sortBy,
@@ -25,10 +25,8 @@ public class BlogPostController {
             @RequestParam(required = false) String filterType,
             @RequestParam(required = false) String filterValue) {
 
-        // 1. Create Sort Object
         Sort sort = sortDir.equalsIgnoreCase("asc") ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
 
-        // 2. Apply Filter if Requested
         if (filterType != null && filterValue != null) {
             if ("author".equalsIgnoreCase(filterType)) {
                 return blogPostRepository.findByAuthorContainingIgnoreCase(filterValue, sort);
@@ -37,32 +35,31 @@ public class BlogPostController {
             }
         }
 
-        // 3. Default: Return All with Sorting
         return blogPostRepository.findAll(sort);
     }
 
+    // 2. Get Single Post (THIS WAS MISSING causing the 404 error)
+    @GetMapping("/{id}")
+    public BlogPost getPostById(@PathVariable Long id) {
+        return blogPostRepository.findById(id).orElse(null);
+    }
+
+    // 3. Create Post
     @PostMapping
     public BlogPost createPost(@RequestBody BlogPost post) {
         return blogPostRepository.save(post);
     }
 
+    // 4. Update Post
+    @PutMapping("/{id}")
+    public BlogPost updatePost(@PathVariable Long id, @RequestBody BlogPost post) {
+        post.setId(id);
+        return blogPostRepository.save(post);
+    }
+
+    // 5. Delete Post
     @DeleteMapping("/{id}")
     public void deletePost(@PathVariable Long id) {
         blogPostRepository.deleteById(id);
-    }
-
-    @PutMapping("/{id}")
-    public BlogPost updatePost(@PathVariable Long id, @RequestBody BlogPost updatedPost) {
-
-        BlogPost existingPost = blogPostRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Post not found with id: " + id));
-
-        existingPost.setTitle(updatedPost.getTitle());
-        existingPost.setContent(updatedPost.getContent());
-        existingPost.setAuthor(updatedPost.getAuthor());
-        existingPost.setPublishDate(updatedPost.getPublishDate());
-        existingPost.setStatus(updatedPost.getStatus());
-
-        return blogPostRepository.save(existingPost);
     }
 }
